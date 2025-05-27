@@ -1,0 +1,1 @@
+axes[1].set_ylim(0, 1)
