@@ -217,7 +217,7 @@ for EIsooti in EIsoot:
     # Microphysical parameters
     nw1 = Mpf.number_conc_all_activated1(nwSoot, nwAmbient) # Number concentration of all activated aerosols in the plume (m^-3)
 
-    b1 = Mpf.b1_param(T, nwSat, vThermal, pwSat, smw) # b1 parameter of the microphysical model
+    b1 = Mpf.b1_param(T, nwSat, vThermal, smw) # b1 parameter of the microphysical model
 
     dSdT = Mf.supersaturation_forcing(G, pwSat, Smw, T, dTdt) # Supersaturation forcing term in the microphysical model
 

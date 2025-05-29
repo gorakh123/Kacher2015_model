@@ -275,3 +275,29 @@ def supersaturation_forcing(
     L = latent_heat_vap_water(T) # Latent heat of vaporization of water (J/molecule)
     kb = 1.38064852e-23 # Boltzmann constant (J/K)
     return (G / ew - Smw * (L / (kb * T**2))) * dTdt
+
+
+
+def supersaturation_forcing2(T: ArrayLike, dTdt: ArrayLike, Smw: ArrayLike) -> ArrayLike:
+    """Determines the supersaturation forcing term in the microphysical model
+
+    Args
+    ----
+        T: ArrayLike
+            Temperature of the plume (K)
+        dTdt: ArrayLike
+            Cooling rate of the plume (K/s)
+        Smw: ArrayLike
+            Saturation ratio of water
+
+    Returns
+    -------
+        ArrayLike:
+            Supersaturation forcing term in the microphysical model
+
+    See Also
+    --------
+        Kacher 2015 for the derivation
+    """
+    dSdT = np.gradient(Smw, T)
+    return dSdT * dTdt
