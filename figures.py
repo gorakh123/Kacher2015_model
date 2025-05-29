@@ -81,4 +81,31 @@ for ax, lab in zip(axes, labels):
 
 plt.show()
 # Save the figure
-fig.savefig('mixing_line_diagram.png', dpi=400, bbox_inches='tight')
+#fig.savefig('mixing_line_diagram.png', dpi=400, bbox_inches='tight')
+
+
+#figure for poster
+pvP2 = Tf.p_sat_ice_murphy_koop(230) + G * (TP - 230)
+plt.rcParams['font.size']   = 18
+
+fig2, ax2 = plt.subplots(figsize=(6, 4.5), constrained_layout=True)
+ax2.plot(TP[TP >= 220], pvP[pvP >= Tf.p_sat_ice_murphy_koop(220)], label=r' Plume (a), $p_v$', linestyle='--', color='black', linewidth=4, zorder=3)
+ax2.plot(TP[TP >= 230], pvP2[pvP2 >= Tf.p_sat_ice_murphy_koop(230)], label=r' Plume (b), $p_v$', linestyle='-.', color='black', linewidth=4, zorder=3)
+ax2.scatter(220, Tf.p_sat_ice_murphy_koop(220), color='black', marker='o', zorder=4, linewidth=4)
+ax2.plot(T, pwsat, color='blue', label=r'$p_{w,sat}$', linewidth=4)
+ax2.plot(T, piSat, color='cyan', label=r'$p_{i,sat}$', linewidth=4)
+ax2.scatter(230, Tf.p_sat_ice_murphy_koop(230), color='black', marker='o', zorder=4, linewidth=4)
+ax2.set_xlabel('Temperature (K)')
+ax2.set_xlim(200, 260)
+ax2.set_ylim(0, 60)
+ax2.set_ylabel('Vapour partial pressure (Pa)')
+ax2.legend()
+ax2.grid()
+ax2.tick_params(axis='x', pad=8)   
+ax2.tick_params(axis='y', pad=8)   
+
+plt.show()
+# Save the figure for poster
+fig2.savefig('mixing_line_diagram_poster.png', dpi=1200, bbox_inches='tight')
+
+
