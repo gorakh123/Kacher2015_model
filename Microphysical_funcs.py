@@ -101,7 +101,7 @@ def b1_param(
 
 
 # correct
-def tau_activation(avgZeta: float, sw: ArrayLike, dSdT: ArrayLike) -> ArrayLike:
+def tau_activation(avgZeta: float, sw: ArrayLike, dSdt: ArrayLike) -> ArrayLike:
     """Determines the activation timescale of the aerosol
 
     Args
@@ -110,7 +110,7 @@ def tau_activation(avgZeta: float, sw: ArrayLike, dSdT: ArrayLike) -> ArrayLike:
             The average size distribution slope parameter of the plume
         sw: ArrayLike
             The supersaturation ratio of the plume along the mixing line
-        dSdT: ArrayLike
+        dSdt: ArrayLike
             The supersaturation forcing term in the microphysical model
     
     Returns
@@ -118,7 +118,7 @@ def tau_activation(avgZeta: float, sw: ArrayLike, dSdT: ArrayLike) -> ArrayLike:
         ArrayLike:
             The activation timescale of the aerosol
     """
-    return (3 * sw) / (2 * avgZeta * dSdT)
+    return (3 * sw) / (2 * avgZeta * dSdt)
 
 
 # correct
@@ -417,3 +417,24 @@ def optical_depth_function(nwfinal: float, rfinal: float, d0: float, Do: float)-
     d = d0 / np.sqrt(Do) # Plume diamter at activation relaxation
     Q = 1 # to be determined
     return np.pi * rfinal**2 * Q * nwfinal * d
+
+def Temp_frz(dTdt: ArrayLike, rw: float, rc: float) -> ArrayLike:
+    """Determines the temperature at which freezing relaxation occurs
+
+    Args
+    ----
+        dTdt: ArrayLike
+            The cooling rate of the plume (K/s)
+        rw: float
+            The radius of the activated water droplets (m)
+        rc: float
+            The critical radius for freezing (m)
+    
+    Returns
+    -------
+        ArrayLike:
+            The temperature at which the plume freezes (K)
+    """
+    a1 = -3.5714 
+    a2 = 858.719
+    return ( np.log( (3 * a1 * dTdt) / (4 * np.pi * ( rw**3 - rc**3) ) ) - a2 ) / (a1)
